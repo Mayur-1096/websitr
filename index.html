@@ -3,166 +3,491 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>My Website</title>
+
+    <title>Spider-Man Movies | The Complete Collection</title>
 
     <style>
-        /* Reset */
+        /* =========================
+           RESET & GENERAL STYLES
+        ========================== */
+
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
         }
 
+        html {
+            scroll-behavior: smooth;
+        }
+
         body {
-            font-family: Arial, sans-serif;
+            font-family: Arial, Helvetica, sans-serif;
+            background: #070b14;
+            color: #ffffff;
             line-height: 1.6;
-            background-color: #FF0000;
-            color: #444;
         }
 
-        /* Header */
-        header {
-            background: #222;
-            color: blue;
-            padding: 20px 0;
-        }
-
-        .navbar {
-            width: 90%;
-            max-width: 1100px;
-            margin: auto;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        .logo {
-            font-size: 24px;
-            font-weight: bold;
-        }
-
-        nav a {
-            color: white;
+        a {
+            color: inherit;
             text-decoration: none;
-            margin-left: 20px;
         }
 
-        nav a:hover {
-            color: #00bcd4;
-        }
+        /* =========================
+           HEADER
+        ========================== */
 
-        /* Hero Section */
-        .hero {
-            min-height: 80vh;
+        header {
+            min-height: 100vh;
             display: flex;
+            flex-direction: column;
             justify-content: center;
             align-items: center;
             text-align: center;
             padding: 40px 20px;
-            background: linear-gradient(135deg, #00bcd4, #3f51b5);
-            color: white;
+            position: relative;
+            overflow: hidden;
+
+            background:
+                linear-gradient(
+                    rgba(5, 8, 18, 0.65),
+                    rgba(5, 8, 18, 0.95)
+                ),
+                url("https://images.unsplash.com/photo-1531259683007-016a7b628fc3?auto=format&fit=crop&w=1800&q=80");
+
+            background-size: cover;
+            background-position: center;
         }
 
-        .hero h1 {
+        header::before {
+            content: "";
+            position: absolute;
+            width: 500px;
+            height: 500px;
+            border: 2px solid rgba(220, 30, 50, 0.25);
+            border-radius: 50%;
+            top: -200px;
+            right: -150px;
+        }
+
+        header::after {
+            content: "";
+            position: absolute;
+            width: 400px;
+            height: 400px;
+            border: 2px solid rgba(30, 100, 220, 0.2);
+            border-radius: 50%;
+            bottom: -200px;
+            left: -150px;
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 2;
+            max-width: 900px;
+        }
+
+        .logo {
+            font-size: 80px;
+            font-weight: 900;
+            letter-spacing: 8px;
+            text-transform: uppercase;
+
+            color: #e62429;
+            text-shadow:
+                4px 4px 0 #0d3b91,
+                0 0 30px rgba(230, 36, 41, 0.5);
+        }
+
+        .hero-subtitle {
+            font-size: 22px;
+            color: #d5d8df;
+            margin: 10px 0 30px;
+        }
+
+        .hero-description {
+            max-width: 700px;
+            margin: auto;
+            color: #b8becb;
+            font-size: 17px;
+        }
+
+        .hero-button {
+            display: inline-block;
+            margin-top: 35px;
+            padding: 14px 32px;
+            border-radius: 30px;
+            background: #e62429;
+            color: white;
+            font-weight: bold;
+            transition: 0.3s;
+            box-shadow: 0 8px 25px rgba(230, 36, 41, 0.3);
+        }
+
+        .hero-button:hover {
+            background: #ff3940;
+            transform: translateY(-4px);
+            box-shadow: 0 12px 30px rgba(230, 36, 41, 0.5);
+        }
+
+        /* =========================
+           NAVIGATION
+        ========================== */
+
+        nav {
+            position: sticky;
+            top: 0;
+            z-index: 100;
+
+            display: flex;
+            justify-content: center;
+            gap: 35px;
+
+            padding: 18px;
+
+            background: rgba(5, 8, 18, 0.95);
+            backdrop-filter: blur(12px);
+
+            border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+        }
+
+        nav a {
+            color: #cbd0da;
+            font-weight: bold;
+            transition: 0.3s;
+        }
+
+        nav a:hover {
+            color: #e62429;
+        }
+
+        /* =========================
+           SECTIONS
+        ========================== */
+
+        section {
+            padding: 90px 7%;
+        }
+
+        .section-title {
+            text-align: center;
+            margin-bottom: 55px;
+        }
+
+        .section-title h2 {
+            font-size: 42px;
+            margin-bottom: 10px;
+        }
+
+        .section-title p {
+            color: #9299a8;
+            max-width: 650px;
+            margin: auto;
+        }
+
+        /* =========================
+           MOVIE GRID
+        ========================== */
+
+        .movie-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 30px;
+            max-width: 1300px;
+            margin: auto;
+        }
+
+        .movie-card {
+            background: #101522;
+            border-radius: 18px;
+            overflow: hidden;
+
+            border: 1px solid rgba(255, 255, 255, 0.07);
+
+            transition: transform 0.35s, box-shadow 0.35s;
+        }
+
+        .movie-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.45);
+            border-color: rgba(230, 36, 41, 0.4);
+        }
+
+        .poster {
+            height: 390px;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .poster img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s;
+        }
+
+        .movie-card:hover .poster img {
+            transform: scale(1.07);
+        }
+
+        .year {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+
+            padding: 6px 12px;
+            border-radius: 20px;
+
+            background: #e62429;
+            font-size: 13px;
+            font-weight: bold;
+        }
+
+        .movie-content {
+            padding: 25px;
+        }
+
+        .movie-content h3 {
+            font-size: 24px;
+            margin-bottom: 8px;
+        }
+
+        .movie-meta {
+            color: #e62429;
+            font-size: 14px;
+            font-weight: bold;
+            margin-bottom: 15px;
+        }
+
+        .movie-description {
+            color: #aeb4c1;
+            font-size: 14px;
+            margin-bottom: 20px;
+        }
+
+        .info {
+            border-top: 1px solid rgba(255, 255, 255, 0.08);
+            padding-top: 15px;
+            font-size: 13px;
+            color: #9098a8;
+        }
+
+        .info strong {
+            color: #dce0e8;
+        }
+
+        /* =========================
+           SPIDER-MAN ERAS
+        ========================== */
+
+        #eras {
+            background: #0b0f1b;
+        }
+
+        .eras {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 25px;
+            max-width: 1100px;
+            margin: auto;
+        }
+
+        .era {
+            padding: 35px;
+            border-radius: 18px;
+            text-align: center;
+
+            background: linear-gradient(
+                145deg,
+                #131a2b,
+                #0c101b
+            );
+
+            border: 1px solid rgba(255, 255, 255, 0.08);
+
+            transition: 0.3s;
+        }
+
+        .era:hover {
+            transform: translateY(-7px);
+            border-color: #e62429;
+        }
+
+        .era-icon {
             font-size: 50px;
             margin-bottom: 15px;
         }
 
-        .hero p {
-            font-size: 20px;
-            margin-bottom: 25px;
+        .era h3 {
+            margin-bottom: 10px;
+            font-size: 22px;
         }
 
-        .btn {
-            display: inline-block;
-            background: white;
-            color: #333;
-            padding: 12px 25px;
-            border-radius: 5px;
-            text-decoration: none;
+        .era p {
+            color: #9da5b5;
+            font-size: 14px;
+        }
+
+        /* =========================
+           TIMELINE
+        ========================== */
+
+        .timeline {
+            max-width: 900px;
+            margin: auto;
+            position: relative;
+        }
+
+        .timeline::before {
+            content: "";
+            position: absolute;
+            left: 50%;
+            top: 0;
+            bottom: 0;
+            width: 3px;
+            background: #e62429;
+            transform: translateX(-50%);
+        }
+
+        .timeline-item {
+            width: 50%;
+            padding: 20px 40px;
+            position: relative;
+        }
+
+        .timeline-item:nth-child(odd) {
+            left: 0;
+            text-align: right;
+        }
+
+        .timeline-item:nth-child(even) {
+            left: 50%;
+        }
+
+        .timeline-dot {
+            position: absolute;
+            width: 16px;
+            height: 16px;
+            background: #e62429;
+            border-radius: 50%;
+            top: 35px;
+            box-shadow: 0 0 15px rgba(230, 36, 41, 0.8);
+        }
+
+        .timeline-item:nth-child(odd) .timeline-dot {
+            right: -8px;
+        }
+
+        .timeline-item:nth-child(even) .timeline-dot {
+            left: -8px;
+        }
+
+        .timeline-content {
+            padding: 20px;
+            border-radius: 14px;
+            background: #111726;
+        }
+
+        .timeline-content h3 {
+            color: #e62429;
+        }
+
+        .timeline-content p {
+            color: #aab1bf;
+            font-size: 14px;
+        }
+
+        /* =========================
+           ABOUT
+        ========================== */
+
+        #about {
+            background:
+                radial-gradient(
+                    circle at center,
+                    rgba(230, 36, 41, 0.12),
+                    transparent 50%
+                );
+        }
+
+        .about-box {
+            max-width: 900px;
+            margin: auto;
+            text-align: center;
+        }
+
+        .about-box p {
+            color: #adb4c2;
+            margin-bottom: 18px;
+        }
+
+        /* =========================
+           FOOTER
+        ========================== */
+
+        footer {
+            text-align: center;
+            padding: 45px 20px;
+            background: #05070d;
+            color: #737b8b;
+            border-top: 1px solid rgba(255, 255, 255, 0.06);
+        }
+
+        footer .spider {
+            color: #e62429;
             font-weight: bold;
         }
 
-        .btn:hover {
-            background: #222;
-            color: white;
-        }
+        /* =========================
+           RESPONSIVE
+        ========================== */
 
-        /* About Section */
-        .about {
-            padding: 60px 20px;
-            text-align: center;
-            background: white;
-        }
+        @media (max-width: 700px) {
 
-        .about h2 {
-            font-size: 32px;
-            margin-bottom: 15px;
-        }
+            .logo {
+                font-size: 48px;
+                letter-spacing: 4px;
+            }
 
-        .about p {
-            max-width: 700px;
-            margin: auto;
-        }
+            .hero-subtitle {
+                font-size: 18px;
+            }
 
-        /* Cards */
-        .services {
-            padding: 60px 20px;
-            text-align: center;
-        }
-
-        .services h2 {
-            margin-bottom: 30px;
-            font-size: 32px;
-        }
-
-        .cards {
-            max-width: 1100px;
-            margin: auto;
-            display: flex;
-            gap: 20px;
-            justify-content: center;
-            flex-wrap: wrap;
-        }
-
-        .card {
-            background: white;
-            width: 300px;
-            padding: 30px;
-            border-radius: 10px;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
-        }
-
-        .card h3 {
-            margin-bottom: 10px;
-            color: #3f51b5;
-        }
-
-        /* Footer */
-        footer {
-            background: #222;
-            color: white;
-            text-align: center;
-            padding: 20px;
-        }
-
-        /* Mobile Responsive */
-        @media (max-width: 600px) {
-            .navbar {
-                flex-direction: column;
+            nav {
                 gap: 15px;
+                flex-wrap: wrap;
+                font-size: 14px;
             }
 
-            nav a {
-                margin: 0 8px;
+            section {
+                padding: 60px 5%;
             }
 
-            .hero h1 {
-                font-size: 36px;
+            .section-title h2 {
+                font-size: 32px;
             }
 
-            .hero p {
-                font-size: 17px;
+            .poster {
+                height: 420px;
+            }
+
+            .timeline::before {
+                left: 10px;
+            }
+
+            .timeline-item,
+            .timeline-item:nth-child(even) {
+                width: 100%;
+                left: 0;
+                padding-left: 40px;
+                padding-right: 0;
+                text-align: left;
+            }
+
+            .timeline-item:nth-child(odd) .timeline-dot,
+            .timeline-item:nth-child(even) .timeline-dot {
+                left: 2px;
+                right: auto;
             }
         }
     </style>
@@ -170,58 +495,754 @@
 
 <body>
 
-    <header>
-        <div class="navbar">
-            <div class="logo">MyWebsite</div>
+    <!-- =========================
+         HERO
+    ========================== -->
 
-            <nav>
-                <a href="#home">Home</a>
-                <a href="#about">About</a>
-                <a href="#services">Services</a>
-            </nav>
+    <header id="home">
+
+        <div class="hero-content">
+
+            <div class="logo">SPIDER-MAN</div>
+
+            <div class="hero-subtitle">
+                With great power comes great movies.
+            </div>
+
+            <p class="hero-description">
+                Explore the cinematic history of Spider-Man — from the
+                original trilogy to the Amazing Spider-Man films,
+                the MCU adventures, and the animated Spider-Verse.
+            </p>
+
+            <a href="#movies" class="hero-button">
+                Explore the Movies ↓
+            </a>
+
         </div>
+
     </header>
 
-    <section class="hero" id="home">
-        <div>
-            <h1>Welcome to My Website</h1>
-            <p>A simple and modern website built with HTML and CSS.</p>
-            <a href="#about" class="btn">Learn More</a>
+
+    <!-- =========================
+         NAVIGATION
+    ========================== -->
+
+    <nav>
+        <a href="#home">Home</a>
+        <a href="#movies">Movies</a>
+        <a href="#eras">Spider-Verse</a>
+        <a href="#timeline">Timeline</a>
+        <a href="#about">About</a>
+    </nav>
+
+
+    <!-- =========================
+         MOVIES
+    ========================== -->
+
+    <section id="movies">
+
+        <div class="section-title">
+            <h2>Spider-Man Movies</h2>
+
+            <p>
+                A collection of major theatrical Spider-Man films
+                featuring the different cinematic versions of the character.
+            </p>
         </div>
-    </section>
 
-    <section class="about" id="about">
-        <h2>About Us</h2>
-        <p>
-            We create simple, beautiful and responsive websites using
-            modern web technologies. This page uses only HTML and
-            internal CSS.
-        </p>
-    </section>
 
-    <section class="services" id="services">
-        <h2>Our Services</h2>
+        <div class="movie-grid">
 
-        <div class="cards">
-            <div class="card">
-                <h3>Web Design</h3>
-                <p>Beautiful and responsive designs for modern websites.</p>
-            </div>
+            <!-- Spider-Man 2002 -->
 
-            <div class="card">
-                <h3>Development</h3>
-                <p>Fast and reliable websites built with clean code.</p>
-            </div>
+            <article class="movie-card">
 
-            <div class="card">
-                <h3>Support</h3>
-                <p>Helpful support and maintenance for your website.</p>
-            </div>
+                <div class="poster">
+
+                    <img
+                        src="https://image.tmdb.org/t/p/w780/gh4L7mB7L4P8tQ1M4j5lF2p6wFQ.jpg"
+                        alt="Spider-Man 2002 poster"
+                    >
+
+                    <span class="year">2002</span>
+
+                </div>
+
+                <div class="movie-content">
+
+                    <h3>Spider-Man</h3>
+
+                    <div class="movie-meta">
+                        ⭐ 7.3/10
+                    </div>
+
+                    <p class="movie-description">
+                        Peter Parker gains extraordinary abilities after
+                        being bitten by a genetically altered spider and
+                        begins his journey as Spider-Man.
+                    </p>
+
+                    <div class="info">
+                        <strong>Director:</strong> Sam Raimi<br>
+                        <strong>Starring:</strong> Tobey Maguire,
+                        Kirsten Dunst, Willem Dafoe
+                    </div>
+
+                </div>
+
+            </article>
+
+
+            <!-- Spider-Man 2 -->
+
+            <article class="movie-card">
+
+                <div class="poster">
+
+                    <img
+                        src="https://image.tmdb.org/t/p/w780/olxPY4G8j4H6s7K7hJ9b5p4w.jpg"
+                        alt="Spider-Man 2 poster"
+                    >
+
+                    <span class="year">2004</span>
+
+                </div>
+
+                <div class="movie-content">
+
+                    <h3>Spider-Man 2</h3>
+
+                    <div class="movie-meta">
+                        ⭐ 7.5/10
+                    </div>
+
+                    <p class="movie-description">
+                        Peter struggles to balance his personal life
+                        with his responsibilities as Spider-Man while
+                        facing the brilliant Doctor Octavius.
+                    </p>
+
+                    <div class="info">
+                        <strong>Director:</strong> Sam Raimi<br>
+                        <strong>Starring:</strong> Tobey Maguire,
+                        Kirsten Dunst, Alfred Molina
+                    </div>
+
+                </div>
+
+            </article>
+
+
+            <!-- Spider-Man 3 -->
+
+            <article class="movie-card">
+
+                <div class="poster">
+
+                    <img
+                        src="https://image.tmdb.org/t/p/w780/qFmwhVUoUSXjkKRmca5yGDEXBI.jpg"
+                        alt="Spider-Man 3 poster"
+                    >
+
+                    <span class="year">2007</span>
+
+                </div>
+
+                <div class="movie-content">
+
+                    <h3>Spider-Man 3</h3>
+
+                    <div class="movie-meta">
+                        ⭐ 6.3/10
+                    </div>
+
+                    <p class="movie-description">
+                        Peter faces multiple enemies while a mysterious
+                        alien symbiote begins to affect his personality
+                        and powers.
+                    </p>
+
+                    <div class="info">
+                        <strong>Director:</strong> Sam Raimi<br>
+                        <strong>Starring:</strong> Tobey Maguire,
+                        Kirsten Dunst, James Franco
+                    </div>
+
+                </div>
+
+            </article>
+
+
+            <!-- Amazing Spider-Man -->
+
+            <article class="movie-card">
+
+                <div class="poster">
+
+                    <img
+                        src="https://image.tmdb.org/t/p/w780/fSbqPbqXa7ePo8bcnZQzZbY9r5.jpg"
+                        alt="The Amazing Spider-Man poster"
+                    >
+
+                    <span class="year">2012</span>
+
+                </div>
+
+                <div class="movie-content">
+
+                    <h3>The Amazing Spider-Man</h3>
+
+                    <div class="movie-meta">
+                        ⭐ 6.9/10
+                    </div>
+
+                    <p class="movie-description">
+                        A new version of Peter Parker discovers his powers
+                        and investigates the mystery surrounding the
+                        disappearance of his parents.
+                    </p>
+
+                    <div class="info">
+                        <strong>Director:</strong> Marc Webb<br>
+                        <strong>Starring:</strong> Andrew Garfield,
+                        Emma Stone, Rhys Ifans
+                    </div>
+
+                </div>
+
+            </article>
+
+
+            <!-- Amazing Spider-Man 2 -->
+
+            <article class="movie-card">
+
+                <div class="poster">
+
+                    <img
+                        src="https://image.tmdb.org/t/p/w780/c3e9e18SSlevqZkYtX6p8b.jpg"
+                        alt="The Amazing Spider-Man 2 poster"
+                    >
+
+                    <span class="year">2014</span>
+
+                </div>
+
+                <div class="movie-content">
+
+                    <h3>The Amazing Spider-Man 2</h3>
+
+                    <div class="movie-meta">
+                        ⭐ 6.6/10
+                    </div>
+
+                    <p class="movie-description">
+                        Spider-Man faces Electro and a transformed Harry
+                        Osborn while his relationship with Gwen Stacy
+                        becomes increasingly complicated.
+                    </p>
+
+                    <div class="info">
+                        <strong>Director:</strong> Marc Webb<br>
+                        <strong>Starring:</strong> Andrew Garfield,
+                        Emma Stone, Jamie Foxx
+                    </div>
+
+                </div>
+
+            </article>
+
+
+            <!-- Homecoming -->
+
+            <article class="movie-card">
+
+                <div class="poster">
+
+                    <img
+                        src="https://image.tmdb.org/t/p/w780/c24sv2weTHPsmDa7j9dj32v4.jpg"
+                        alt="Spider-Man Homecoming poster"
+                    >
+
+                    <span class="year">2017</span>
+
+                </div>
+
+                <div class="movie-content">
+
+                    <h3>Spider-Man: Homecoming</h3>
+
+                    <div class="movie-meta">
+                        ⭐ 7.4/10
+                    </div>
+
+                    <p class="movie-description">
+                        Peter Parker tries to navigate high school life
+                        while proving himself as a superhero under the
+                        guidance of Tony Stark.
+                    </p>
+
+                    <div class="info">
+                        <strong>Director:</strong> Jon Watts<br>
+                        <strong>Starring:</strong> Tom Holland,
+                        Michael Keaton, Zendaya
+                    </div>
+
+                </div>
+
+            </article>
+
+
+            <!-- Far From Home -->
+
+            <article class="movie-card">
+
+                <div class="poster">
+
+                    <img
+                        src="https://image.tmdb.org/t/p/w780/4q2NNj4S5dG2RLFc5.jpg"
+                        alt="Spider-Man Far From Home poster"
+                    >
+
+                    <span class="year">2019</span>
+
+                </div>
+
+                <div class="movie-content">
+
+                    <h3>Spider-Man: Far From Home</h3>
+
+                    <div class="movie-meta">
+                        ⭐ 7.4/10
+                    </div>
+
+                    <p class="movie-description">
+                        Peter joins his classmates on a European vacation,
+                        but his trip takes an unexpected turn when
+                        Mysterio appears.
+                    </p>
+
+                    <div class="info">
+                        <strong>Director:</strong> Jon Watts<br>
+                        <strong>Starring:</strong> Tom Holland,
+                        Zendaya, Jake Gyllenhaal
+                    </div>
+
+                </div>
+
+            </article>
+
+
+            <!-- No Way Home -->
+
+            <article class="movie-card">
+
+                <div class="poster">
+
+                    <img
+                        src="https://image.tmdb.org/t/p/w780/1g0dhYtq4irTY1GPXvft6k4YL.jpg"
+                        alt="Spider-Man No Way Home poster"
+                    >
+
+                    <span class="year">2021</span>
+
+                </div>
+
+                <div class="movie-content">
+
+                    <h3>Spider-Man: No Way Home</h3>
+
+                    <div class="movie-meta">
+                        ⭐ 8.2/10
+                    </div>
+
+                    <p class="movie-description">
+                        After Peter's identity is revealed, a spell
+                        intended to restore his secret identity opens
+                        the door to unexpected visitors from other worlds.
+                    </p>
+
+                    <div class="info">
+                        <strong>Director:</strong> Jon Watts<br>
+                        <strong>Starring:</strong> Tom Holland,
+                        Zendaya, Tobey Maguire, Andrew Garfield
+                    </div>
+
+                </div>
+
+            </article>
+
+
+            <!-- Into the Spider-Verse -->
+
+            <article class="movie-card">
+
+                <div class="poster">
+
+                    <img
+                        src="https://image.tmdb.org/t/p/w780/iiZZdoQBEYBv6id8su7ImL0oCbD.jpg"
+                        alt="Spider-Man Into the Spider-Verse poster"
+                    >
+
+                    <span class="year">2018</span>
+
+                </div>
+
+                <div class="movie-content">
+
+                    <h3>Into the Spider-Verse</h3>
+
+                    <div class="movie-meta">
+                        ⭐ 8.4/10
+                    </div>
+
+                    <p class="movie-description">
+                        Miles Morales becomes Spider-Man and discovers
+                        that there are multiple Spider-People across
+                        different dimensions.
+                    </p>
+
+                    <div class="info">
+                        <strong>Directors:</strong> Bob Persichetti,
+                        Peter Ramsey, Rodney Rothman<br>
+                        <strong>Voice:</strong> Shameik Moore,
+                        Jake Johnson, Hailee Steinfeld
+                    </div>
+
+                </div>
+
+            </article>
+
+
+            <!-- Across the Spider-Verse -->
+
+            <article class="movie-card">
+
+                <div class="poster">
+
+                    <img
+                        src="https://image.tmdb.org/t/p/w780/8Vt6mWEReuy4Of61Lnj5Xj704m8.jpg"
+                        alt="Spider-Man Across the Spider-Verse poster"
+                    >
+
+                    <span class="year">2023</span>
+
+                </div>
+
+                <div class="movie-content">
+
+                    <h3>Across the Spider-Verse</h3>
+
+                    <div class="movie-meta">
+                        ⭐ 8.6/10
+                    </div>
+
+                    <p class="movie-description">
+                        Miles Morales travels across the multiverse and
+                        encounters a team of Spider-People who protect
+                        the very fabric of reality.
+                    </p>
+
+                    <div class="info">
+                        <strong>Directors:</strong> Joaquim Dos Santos,
+                        Kemp Powers, Justin K. Thompson<br>
+                        <strong>Voice:</strong> Shameik Moore,
+                        Hailee Steinfeld, Oscar Isaac
+                    </div>
+
+                </div>
+
+            </article>
+
         </div>
+
     </section>
+
+
+    <!-- =========================
+         SPIDER-MAN ERAS
+    ========================== -->
+
+    <section id="eras">
+
+        <div class="section-title">
+
+            <h2>Three Live-Action Spider-Men</h2>
+
+            <p>
+                Three actors have portrayed Peter Parker in major
+                live-action Spider-Man film series.
+            </p>
+
+        </div>
+
+
+        <div class="eras">
+
+            <div class="era">
+                <div class="era-icon">🕷️</div>
+
+                <h3>Tobey Maguire</h3>
+
+                <p>
+                    The original modern live-action Spider-Man trilogy
+                    directed by Sam Raimi.
+                </p>
+            </div>
+
+
+            <div class="era">
+                <div class="era-icon">🕸️</div>
+
+                <h3>Andrew Garfield</h3>
+
+                <p>
+                    The Amazing Spider-Man series directed by Marc Webb.
+                </p>
+            </div>
+
+
+            <div class="era">
+                <div class="era-icon">🦸</div>
+
+                <h3>Tom Holland</h3>
+
+                <p>
+                    The MCU version of Spider-Man who becomes involved
+                    with the larger Marvel universe.
+                </p>
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- =========================
+         TIMELINE
+    ========================== -->
+
+    <section id="timeline">
+
+        <div class="section-title">
+
+            <h2>Movie Timeline</h2>
+
+            <p>
+                Follow the theatrical Spider-Man movies through the years.
+            </p>
+
+        </div>
+
+
+        <div class="timeline">
+
+            <div class="timeline-item">
+
+                <span class="timeline-dot"></span>
+
+                <div class="timeline-content">
+
+                    <h3>2002</h3>
+
+                    <p>
+                        Spider-Man introduces Tobey Maguire as Peter Parker.
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <div class="timeline-item">
+
+                <span class="timeline-dot"></span>
+
+                <div class="timeline-content">
+
+                    <h3>2004</h3>
+
+                    <p>
+                        Spider-Man 2 introduces Doctor Octavius.
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <div class="timeline-item">
+
+                <span class="timeline-dot"></span>
+
+                <div class="timeline-content">
+
+                    <h3>2007</h3>
+
+                    <p>
+                        Spider-Man 3 concludes Raimi's original trilogy.
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <div class="timeline-item">
+
+                <span class="timeline-dot"></span>
+
+                <div class="timeline-content">
+
+                    <h3>2012</h3>
+
+                    <p>
+                        Andrew Garfield begins his Spider-Man series.
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <div class="timeline-item">
+
+                <span class="timeline-dot"></span>
+
+                <div class="timeline-content">
+
+                    <h3>2017</h3>
+
+                    <p>
+                        Tom Holland's Spider-Man receives his first
+                        solo MCU movie.
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <div class="timeline-item">
+
+                <span class="timeline-dot"></span>
+
+                <div class="timeline-content">
+
+                    <h3>2018</h3>
+
+                    <p>
+                        Miles Morales leads the animated Spider-Verse.
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <div class="timeline-item">
+
+                <span class="timeline-dot"></span>
+
+                <div class="timeline-content">
+
+                    <h3>2021</h3>
+
+                    <p>
+                        No Way Home brings Spider-Man's cinematic
+                        multiverse into the spotlight.
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <div class="timeline-item">
+
+                <span class="timeline-dot"></span>
+
+                <div class="timeline-content">
+
+                    <h3>2023</h3>
+
+                    <p>
+                        Across the Spider-Verse expands the animated
+                        Spider-Verse.
+                    </p>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- =========================
+         ABOUT
+    ========================== -->
+
+    <section id="about">
+
+        <div class="section-title">
+
+            <h2>About Spider-Man</h2>
+
+        </div>
+
+
+        <div class="about-box">
+
+            <p>
+                Spider-Man is one of Marvel's most recognizable
+                superheroes. The character was created by writer
+                Stan Lee and artist Steve Ditko and first appeared
+                in Marvel Comics in 1962.
+            </p>
+
+            <p>
+                Over the years, Spider-Man has appeared in numerous
+                animated and live-action adaptations. The movies have
+                introduced different versions of Peter Parker as well
+                as characters such as Miles Morales.
+            </p>
+
+            <p>
+                The Spider-Man films explore themes of responsibility,
+                friendship, identity, sacrifice, and what it means
+                to use extraordinary abilities for others.
+            </p>
+
+        </div>
+
+    </section>
+
+
+    <!-- =========================
+         FOOTER
+    ========================== -->
 
     <footer>
-        <p>&copy; 2026 MyWebsite. All rights reserved.</p>
+
+        <p>
+            🕷️ <span class="spider">SPIDER-MAN</span> Movie Collection
+        </p>
+
+        <p>
+            Fan-made informational website. Marvel characters and
+            movie properties belong to their respective rights holders.
+        </p>
+
+        <br>
+
+        <p>
+            With great power comes great responsibility.
+        </p>
+
     </footer>
 
 </body>
